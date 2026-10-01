@@ -1,41 +1,15 @@
-# Grid-Bot für crypto.com Exchange (NEAR, BONK, CRO)
+# Grid-Bots auf crypto.com Exchange (manuell per GUI)
 
-Parameter in `config.yaml` stammen aus der Bewertung vom 01.10.2026:
+Exchange → *Trading Bots* → *Grid Trading*, Paare gegen USDT. Gebühren: Maker 0 % / Taker 0,088 %.
+Kurse (Stand 01.10.2026): NEAR 4,98 · BONK 0,000003742 · CRO 0,06842
 
 | | NEAR | BONK | CRO |
 |---|---|---|---|
-| Rolle | Hauptposition (700 USDT) | Spekulation (150 USDT) | Börsen-Coin (200 USDT) |
-| Raster | 4,40–5,80 USDT, 14 Grids (~2 % je Grid) | 0,0000030–0,0000046 USDT, 8 Grids | 0,058–0,080 USDT, 10 Grids |
+| Untergrenze | 4,40 (−11,7 %) | 0,0000030 (−19,8 %) | 0,058 (−15,2 %) |
+| Obergrenze | 5,80 (+16,5 %) | 0,0000046 (+22,9 %) | 0,080 (+16,9 %) |
+| Bandbreite | 31,8 % | 53,3 % | 37,9 % |
+| Grids | 14 | 8 | 10 |
+| Investment | 700 USDT | 150 USDT | 200 USDT |
 | Stop-Loss | 4,10 | 0,0000027 | 0,054 |
-| Begründung | Rally +175 %/30 Tage: Raster um Unterstützung 5,00 / Widerstand 5,50, Rücksetzer werden eingesammelt | hohes Totalverlust-Risiko: klein halten, weit, enger Stop | Kurs ~0,067: Seitwärtsbereich, ~3,3 % je Grid |
 
-**Vor dem Start prüfen:** Preise stammen aus Websuchen und sind evtl. veraltet. `lower`/`upper` an den aktuellen Kurs anpassen.
-Der Bot bricht ab, wenn der Kurs außerhalb des Rasters liegt, die Gebühren den Grid-Abstand auffressen
-oder crypto.com das Paar bzw. die Mindestordergröße nicht zulässt.
-
-## Gebühren
-Maker 0 % / Taker 0,088 %. Alle Grid-Orders werden als **Post-Only-Limit** gesendet und zahlen damit 0 % – jeder
-Zyklus bringt den vollen Grid-Abstand. Nur der Start-Marktkauf kostet Taker-Gebühr (wird vom Gewinn abgezogen).
-Der Fee-Guard rechnet konservativ mit Taker-Gebühr. Werte: `fee_maker_pct` / `fee_taker_pct` in `config.yaml`.
-
-## Start
-```
-pip install -r requirements.txt
-python -m gridbot            # mode: paper (Simulation, nur öffentliche Preise)
-```
-Live: `mode: live` setzen, API-Key in crypto.com Exchange anlegen (nur *Trade*, **kein Withdraw**, IP-Whitelist):
-```
-export EXCHANGE_API_KEY=... EXCHANGE_SECRET=...
-python -m gridbot
-```
-Mind. eine Woche im Paper-Modus laufen lassen, bevor du live gehst.
-
-## Home Assistant
-Mit `HA_URL` (z. B. `http://homeassistant.local:8123`) und `HA_TOKEN` (Long-Lived Access Token) legt der Bot
-`sensor.gridbot_near` / `sensor.gridbot_bonk` an (Zustand = Gewinn in USDT; Attribute: Kurs, Zyklen, offene Orders, gestoppt).
-Betrieb z. B. als Add-on, systemd-Dienst oder Docker-Container.
-
-## Risiken
-- Grid-Bots verlieren bei Trends aus dem Raster (Bestand wird zum Bag). Der Stop-Loss storniert nur Orders, er verkauft den Bestand nicht.
-- Zustand der offenen Orders wird nicht wiederhergestellt: nach Neustart `cancel_all` auf der Börse ausführen und neu starten.
-- Keine Anlageberatung.
+Keine Anlageberatung.

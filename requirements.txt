@@ -1,3 +1,0 @@
-ccxt
-pyyaml
-pytest
