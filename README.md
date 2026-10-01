@@ -5,8 +5,8 @@ Parameter in `config.yaml` stammen aus der Bewertung vom 01.10.2026:
 | | NEAR | BONK | CRO |
 |---|---|---|---|
 | Rolle | Hauptposition (700 USDT) | Spekulation (150 USDT) | Börsen-Coin (200 USDT) |
-| Raster | 4,50–6,20 USDT, 14 Grids | 0,0000030–0,0000046 USDT, 8 Grids | 0,058–0,080 USDT, 10 Grids |
-| Stop-Loss | 4,20 | 0,0000027 | 0,054 |
+| Raster | 4,40–5,80 USDT, 14 Grids (~2 % je Grid) | 0,0000030–0,0000046 USDT, 8 Grids | 0,058–0,080 USDT, 10 Grids |
+| Stop-Loss | 4,10 | 0,0000027 | 0,054 |
 | Begründung | Rally +175 %/30 Tage: Raster um Unterstützung 5,00 / Widerstand 5,50, Rücksetzer werden eingesammelt | hohes Totalverlust-Risiko: klein halten, weit, enger Stop | Kurs ~0,067: Seitwärtsbereich, ~3,3 % je Grid |
 
 **Vor dem Start prüfen:** Preise stammen aus Websuchen und sind evtl. veraltet. `lower`/`upper` an den aktuellen Kurs anpassen.
