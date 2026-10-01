@@ -80,6 +80,7 @@ class LiveExchange:
         o = self.ex.create_limit_order(
             symbol, side, float(self.ex.amount_to_precision(symbol, amount)),
             float(self.ex.price_to_precision(symbol, price)),
+            {"postOnly": True},  # garantiert Maker-Gebühr (0 %); wird abgelehnt statt als Taker gefüllt
         )
         return o["id"]
 

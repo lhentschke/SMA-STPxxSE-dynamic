@@ -1,17 +1,22 @@
-# Grid-Bot für crypto.com Exchange (NEAR, BONK)
+# Grid-Bot für crypto.com Exchange (NEAR, BONK, CRO)
 
 Parameter in `config.yaml` stammen aus der Bewertung vom 01.10.2026:
 
-| | NEAR | BONK |
-|---|---|---|
-| Rolle | Hauptposition (700 USDT) | Spekulation (150 USDT) |
-| Raster | 4,50–6,20 USDT, 14 Grids | 0,0000030–0,0000046 USDT, 8 Grids |
-| Stop-Loss | 4,20 | 0,0000027 |
-| Begründung | Rally +175 %/30 Tage: Raster um Unterstützung 5,00 / Widerstand 5,50, Rücksetzer werden eingesammelt | hohes Totalverlust-Risiko: klein halten, weit, enger Stop |
+| | NEAR | BONK | CRO |
+|---|---|---|---|
+| Rolle | Hauptposition (700 USDT) | Spekulation (150 USDT) | Börsen-Coin (200 USDT) |
+| Raster | 4,50–6,20 USDT, 14 Grids | 0,0000030–0,0000046 USDT, 8 Grids | 0,058–0,080 USDT, 10 Grids |
+| Stop-Loss | 4,20 | 0,0000027 | 0,054 |
+| Begründung | Rally +175 %/30 Tage: Raster um Unterstützung 5,00 / Widerstand 5,50, Rücksetzer werden eingesammelt | hohes Totalverlust-Risiko: klein halten, weit, enger Stop | Kurs ~0,067: Seitwärtsbereich, ~3,3 % je Grid |
 
 **Vor dem Start prüfen:** Preise stammen aus Websuchen und sind evtl. veraltet. `lower`/`upper` an den aktuellen Kurs anpassen.
 Der Bot bricht ab, wenn der Kurs außerhalb des Rasters liegt, die Gebühren den Grid-Abstand auffressen
 oder crypto.com das Paar bzw. die Mindestordergröße nicht zulässt.
+
+## Gebühren
+Maker 0 % / Taker 0,088 %. Alle Grid-Orders werden als **Post-Only-Limit** gesendet und zahlen damit 0 % – jeder
+Zyklus bringt den vollen Grid-Abstand. Nur der Start-Marktkauf kostet Taker-Gebühr (wird vom Gewinn abgezogen).
+Der Fee-Guard rechnet konservativ mit Taker-Gebühr. Werte: `fee_maker_pct` / `fee_taker_pct` in `config.yaml`.
 
 ## Start
 ```

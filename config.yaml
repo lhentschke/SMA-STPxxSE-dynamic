@@ -1,7 +1,8 @@
 # mode: paper = Simulation (Standard), live = echte Orders (EXCHANGE_API_KEY / EXCHANGE_SECRET als Umgebungsvariablen)
 mode: paper
 exchange: cryptocom
-fee_pct: 0.1          # Gebühr je Order in % – an dein Gebührenlevel anpassen
+fee_maker_pct: 0.0    # Gebührenlevel crypto.com: Maker 0,0000 % / Taker 0,0880 %
+fee_taker_pct: 0.088
 poll_seconds: 30
 
 bots:
@@ -25,3 +26,13 @@ bots:
     mode: geometric
     investment: 150     # USDT
     stop_loss: 0.0000027
+
+  # CRO (Kernwährung der Börse): Kurs ~0,067, ruhiger Seitwärtsbereich, mittlere Allokation.
+  CRO:
+    symbol: CRO/USDT
+    lower: 0.058
+    upper: 0.080
+    grids: 10
+    mode: geometric
+    investment: 200     # USDT
+    stop_loss: 0.054

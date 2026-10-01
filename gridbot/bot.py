@@ -18,7 +18,8 @@ class GridBot:
         self.name = name
         self.symbol = cfg["symbol"]
         self.ex = exchange
-        self.fee = cfg.get("fee_pct", 0.1)
+        self.fee = cfg.get("fee_maker_pct", 0.0)    # Grid-Orders sind Limit/Post-Only = Maker
+        self.taker = cfg.get("fee_taker_pct", 0.088)  # nur Start-Marktkauf (und Notfall-Fills)
         self.lower, self.upper = cfg["lower"], cfg["upper"]
         self.stop_loss = cfg.get("stop_loss")
         self.levels = make_levels(self.lower, self.upper, cfg["grids"], cfg.get("mode", "geometric"))
@@ -29,7 +30,7 @@ class GridBot:
         self.stopped = False
         self.state_file = Path(state_dir) / f"{name}.json"
 
-        step = net_step_pct(self.levels, self.fee)
+        step = net_step_pct(self.levels, self.taker)  # konservativ: Abstand muss auch Taker-Gebühren decken
         if step <= 0:
             raise ValueError(f"{name}: Grid-Abstand deckt Gebühren nicht (netto {step:.2f}%) – weniger Grids wählen")
         exchange.check_market(self.symbol, self.quote_per_grid, self.levels) if exchange else None
@@ -43,6 +44,7 @@ class GridBot:
         base_needed = sum(self.quote_per_grid / self.levels[i] for i in sells)
         if base_needed:
             self.ex.market_buy(self.symbol, base_needed)  # Startbestand für Verkaufsorders
+            self.profit -= base_needed * price * self.taker / 100  # Taker-Gebühr des Startkaufs
         for i, lv in enumerate(self.levels):
             if lv < price:
                 self._place(i, "buy")
@@ -113,9 +115,9 @@ def run(config_path: str = "config.yaml") -> None:
         import ccxt  # öffentlicher Preis-Feed, keine Keys nötig
 
         feed = getattr(ccxt, cfg["exchange"])()
-        ex = PaperExchange(lambda s: float(feed.fetch_ticker(s)["last"]), cfg.get("fee_pct", 0.1))
+        ex = PaperExchange(lambda s: float(feed.fetch_ticker(s)["last"]), cfg.get("fee_taker_pct", 0.088))
         log.info("PAPER-MODUS – es werden keine echten Orders gesendet")
-    bots = [GridBot(n, {**c, "fee_pct": cfg.get("fee_pct", 0.1)}, ex) for n, c in cfg["bots"].items()]
+    bots = [GridBot(n, {**c, "fee_maker_pct": cfg.get("fee_maker_pct", 0.0), "fee_taker_pct": cfg.get("fee_taker_pct", 0.088)}, ex) for n, c in cfg["bots"].items()]
     for b in bots:
         b.start()
     while True:
