@@ -32,6 +32,7 @@ class GridBot:
         step = net_step_pct(self.levels, self.fee)
         if step <= 0:
             raise ValueError(f"{name}: Grid-Abstand deckt Gebühren nicht (netto {step:.2f}%) – weniger Grids wählen")
+        exchange.check_market(self.symbol, self.quote_per_grid, self.levels) if exchange else None
         log.info("%s: %d Stufen, min. Netto-Gewinn/Zyklus %.2f%%", name, len(self.levels), step)
 
     def start(self) -> None:

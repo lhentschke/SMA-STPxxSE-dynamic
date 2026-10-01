@@ -26,6 +26,9 @@ class PaperExchange:
     def price(self, symbol: str) -> float:
         return self._price_fn(symbol)
 
+    def check_market(self, symbol: str, quote_per_grid: float, levels: list[float]) -> None:
+        pass
+
     def market_buy(self, symbol: str, amount: float) -> float:
         return self.price(symbol)
 
@@ -56,6 +59,18 @@ class LiveExchange:
 
     def price(self, symbol: str) -> float:
         return float(self.ex.fetch_ticker(symbol)["last"])
+
+    def check_market(self, symbol: str, quote_per_grid: float, levels: list[float]) -> None:
+        """Bricht ab, wenn das Paar fehlt oder die Order-Größe unter dem Börsen-Minimum liegt."""
+        m = self.ex.markets.get(symbol)
+        if not m or not m.get("active", True):
+            raise RuntimeError(f"{symbol} ist auf {self.ex.id} nicht handelbar")
+        min_cost = (m["limits"]["cost"] or {}).get("min") or 0
+        min_amt = (m["limits"]["amount"] or {}).get("min") or 0
+        if quote_per_grid < min_cost:
+            raise RuntimeError(f"{symbol}: {quote_per_grid:.2f} je Grid < Mindestwert {min_cost} – weniger Grids/mehr Investment")
+        if quote_per_grid / levels[-1] < min_amt:
+            raise RuntimeError(f"{symbol}: Ordermenge unter Mindestmenge {min_amt}")
 
     def market_buy(self, symbol: str, amount: float) -> float:
         o = self.ex.create_market_buy_order(symbol, self.ex.amount_to_precision(symbol, amount))
