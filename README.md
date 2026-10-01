@@ -26,7 +26,7 @@ Bots: 3.150 USD + 700 USDT = 3.850 (ca. 72 % von ca. 5.340). Reserve: ca. 1.250 
 
 ## Reihenfolge (Termine laut Nachrichtenlage vom 01.10.2026, nicht geprüft)
 1. **ADA** sofort (ruhigster Coin) – **läuft seit 01.10.2026** (400 USDT, 24 Grids).
-2. **CRO** nach den Abstimmungen am **3.10.** (228 Mio. CRO Burn, Revenue-Backed CRO); Upgrade v1.8 am 22.10.
+2. **CRO** – **läuft seit 01.10.2026** (2.000 USD, 12 Grids), also *vor* den Abstimmungen am **3.10.** (228 Mio. CRO Burn, Revenue-Backed CRO): rund um den Termin mit starken Kursausschlägen rechnen, Stop-Loss 0,050 beachten; Upgrade v1.8 am 22.10.
 3. **NEAR** nach dem **5.10.** (Upgrade, Gas-Rückerstattung entfällt; ETF-Zuflüsse); +180 % im September, überhitzt.
 4. **XRP** nach dem **9.10.** (Protokoll-Updates 5./9.10., Evernorth/Nasdaq 7./8.10., Swell 27.–29.10.).
 5. **BONK** zuletzt und klein, nach dem **7.10.** (Upbit-Delisting, Abhebungen bis dahin offen).
