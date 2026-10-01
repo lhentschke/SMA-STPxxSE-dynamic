@@ -1,0 +1,27 @@
+# mode: paper = Simulation (Standard), live = echte Orders (EXCHANGE_API_KEY / EXCHANGE_SECRET als Umgebungsvariablen)
+mode: paper
+exchange: cryptocom
+fee_pct: 0.1          # Gebühr je Order in % – an dein Gebührenlevel anpassen
+poll_seconds: 30
+
+bots:
+  # NEAR (Hauptposition): Kurs ~5,39 nach +175 % in 30 Tagen -> Raster um Unterstützung $5,00 / Widerstand $5,50,
+  # Stop-Loss unter dem Raster, falls die Rally komplett kippt.
+  NEAR:
+    symbol: NEAR/USDT
+    lower: 4.50
+    upper: 6.20
+    grids: 14
+    mode: geometric
+    investment: 700     # USDT
+    stop_loss: 4.20
+
+  # BONK (Spekulation): kleine Allokation, weites Raster, engerer Stop-Loss wegen hohem Totalverlust-Risiko.
+  BONK:
+    symbol: BONK/USDT
+    lower: 0.0000030
+    upper: 0.0000046
+    grids: 8
+    mode: geometric
+    investment: 150     # USDT
+    stop_loss: 0.0000027
